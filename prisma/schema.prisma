@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Product {
+  id           Int         @id @default(autoincrement())
+  title        String
+  price        String
+  numericPrice Int
+  oldPrice     String?
+  discount     String?
+  rating       Float?
+  reviews      Int?
+  image        String      @map("legacy_image") // We map this for backward compatibility and store the first image here
+  images       String[]
+  description  String?
+  category     String?
+  inStock      Boolean     @default(true)
+  specs        Json?
+  
+  orderItems   OrderItem[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Order {
+  id          String      @id @unique // The generated ODXXXX ID
+  fullName    String
+  email       String?
+  phone       String
+  pincode     String
+  city        String
+  address     String
+  totalAmount Int
+  status      String      @default("processing")
+  
+  items       OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  orderId   String
+  productId Int
+  quantity  Int
+  pricePaid Int      // Historic snapshot of What they paid exactly
+  
+  order     Order    @relation(fields: [orderId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+}
