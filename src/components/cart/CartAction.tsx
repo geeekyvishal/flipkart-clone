@@ -12,6 +12,28 @@ export function CartAction() {
 
   useEffect(() => {
     setMounted(true);
+    
+    // Auto purge stale/invalid database products from local cart on startup
+    const state = useCartStore.getState();
+    if (state.items.length > 0) {
+      fetch('/api/products/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: state.items.map(i => i.id) })
+      })
+      .then(res => res.json())
+      .then(data => {
+         if (data.validIds !== undefined && Array.isArray(data.validIds)) {
+           state.items.forEach(item => {
+             if (!data.validIds.includes(item.id)) {
+                console.warn(`[Cart Validation] Auto-removing invalid stale product ID: ${item.id}`);
+                useCartStore.getState().removeItem(item.id);
+             }
+           });
+         }
+      })
+      .catch((e) => console.error("Validation error:", e));
+    }
   }, []);
 
   return (

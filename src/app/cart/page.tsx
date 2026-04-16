@@ -45,6 +45,12 @@ export default function CartPage() {
                   <h2 className="text-[18px] font-medium text-[var(--color-text-primary)]">
                     Flipkart ({items.length})
                   </h2>
+                  <button 
+                    onClick={() => useCartStore.getState().clearCart()} 
+                    className="text-[14px] font-medium text-[var(--color-brand)] uppercase hover:text-blue-700 active:scale-95 transition-all"
+                  >
+                    Clear Cart
+                  </button>
                </div>
                
                <div className="flex flex-col bg-white">

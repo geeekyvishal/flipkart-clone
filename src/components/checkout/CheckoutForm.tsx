@@ -38,8 +38,28 @@ export function CheckoutForm() {
     setIsSubmitting(true);
     
     try {
-      const items = useCartStore.getState().items;
-      const totalAmount = useCartStore.getState().getTotalPrice() - useCartStore.getState().getTotalDiscount();
+      const state = useCartStore.getState();
+      const items = state.items;
+
+      // Final sanity validation guard
+      const validationResponse = await fetch('/api/products/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: items.map(i => i.id) })
+      });
+      const validCheck = await validationResponse.json();
+
+      if (validCheck.validIds) {
+        const invalidIds = items.filter(i => !validCheck.validIds.includes(i.id));
+        if (invalidIds.length > 0) {
+          invalidIds.forEach(badItem => state.removeItem(badItem.id));
+          setIsSubmitting(false);
+          alert("Your cart contained outdated or unavailable products which have been auto-removed. Please review your cart and checkout again.");
+          return;
+        }
+      }
+
+      const totalAmount = state.getTotalPrice() - state.getTotalDiscount();
 
       const response = await fetch('/api/orders', {
         method: 'POST',
