@@ -46,9 +46,10 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ message: 'Order placed successfully', order }, { status: 201 });
   } catch (error: any) {
-    console.error('API Error processing order:', error);
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error('API Error processing order:', errorMsg);
     return NextResponse.json(
-      { error: 'Failed to place order securely', details: error.message }, 
+      { error: errorMsg }, 
       { status: 500 }
     );
   }

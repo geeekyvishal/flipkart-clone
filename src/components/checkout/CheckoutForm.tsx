@@ -62,9 +62,9 @@ export function CheckoutForm() {
       clearCart(); // Native zustand flush
       router.push(`/order-success?id=${data.order.id}`);
 
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Failed to submit order onto Database. Make sure Prisma is running.");
+      alert(`Checkout Error: ${error.message || 'Make sure Prisma is configured correctly.'}`);
       setIsSubmitting(false);
     }
   };
