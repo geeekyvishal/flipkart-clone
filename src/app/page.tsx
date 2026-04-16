@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { HeroBanner } from "@/components/home/HeroBanner";
 import { RecommendationSection } from "@/components/home/RecommendationSection";
 import { ProductGrid } from "@/components/home/ProductGrid";

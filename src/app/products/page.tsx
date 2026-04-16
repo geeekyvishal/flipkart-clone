@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Suspense } from "react";
 import { ProductListingClient } from "@/components/products/ProductListingClient";
 import { ProductListingSkeleton } from "@/components/products/ProductListingSkeleton";
