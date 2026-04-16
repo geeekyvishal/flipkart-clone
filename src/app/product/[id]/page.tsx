@@ -1,4 +1,4 @@
-import { allProducts } from "@/lib/dummy-data";
+
 import { notFound } from "next/navigation";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductInfo } from "@/components/product/ProductInfo";
@@ -16,12 +16,7 @@ export async function generateMetadata({ params }: PageProps) {
   const resolvedParams = await params;
   const productId = parseInt(resolvedParams.id, 10);
   
-  let product = null;
-  try {
-     product = await prisma.product.findUnique({ where: { id: productId }});
-  } catch (e) {
-     product = allProducts.find(p => p.id === productId);
-  }
+  const product = await prisma.product.findUnique({ where: { id: productId }});
 
   if (!product) return { title: "Product Not Found" };
   
@@ -35,13 +30,7 @@ export default async function ProductPage({ params }: PageProps) {
   const resolvedParams = await params;
   const productId = parseInt(resolvedParams.id, 10);
   
-  let product = null;
-  try {
-     product = await prisma.product.findUnique({ where: { id: productId }});
-  } catch (error) {
-     console.warn("Postgres logic skipped! Using Dummy Data fallback.");
-     product = allProducts.find(p => p.id === productId);
-  }
+  const product = await prisma.product.findUnique({ where: { id: productId }});
 
   if (!product) {
     notFound(); 

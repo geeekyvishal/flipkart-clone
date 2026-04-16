@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { ProductListingClient } from "@/components/products/ProductListingClient";
 import { ProductListingSkeleton } from "@/components/products/ProductListingSkeleton";
-import { allProducts } from "@/lib/dummy-data";
+
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
@@ -11,18 +11,7 @@ export const metadata = {
 
 export default async function ProductsPage() {
   
-  let products = [];
-  try {
-     const dbProducts = await prisma.product.findMany();
-     if (dbProducts.length > 0) {
-        products = dbProducts;
-     } else {
-        products = allProducts;
-     }
-  } catch (error) {
-     console.warn("Postgres logic skipped! Using Dummy Data fallback.");
-     products = allProducts;
-  }
+  const products = await prisma.product.findMany();
 
   return (
     <Suspense fallback={<ProductListingSkeleton />}>
