@@ -8,8 +8,13 @@ import { PageContainer } from "@/components/layout/PageContainer";
 
 // Render on server, validate DB state
 export default async function Home() {
-  
-  const products = await prisma.product.findMany({ take: 24 });
+  let products: any[] = [];
+  try {
+    const dbProducts = await prisma.product.findMany({ take: 24 });
+    if (dbProducts) products = dbProducts;
+  } catch (error) {
+    console.error("Database fetch failed on Home page:", error);
+  }
 
   // Segment payload
   const recommendedProducts = products.slice(0, 6);

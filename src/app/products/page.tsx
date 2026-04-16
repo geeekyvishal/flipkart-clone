@@ -11,8 +11,13 @@ export const metadata = {
 };
 
 export default async function ProductsPage() {
-  
-  const products = await prisma.product.findMany();
+  let products: any[] = [];
+  try {
+     const dbProducts = await prisma.product.findMany();
+     if (dbProducts) products = dbProducts;
+  } catch (error) {
+     console.error("Database fetch failed on Products page:", error);
+  }
 
   return (
     <Suspense fallback={<ProductListingSkeleton />}>

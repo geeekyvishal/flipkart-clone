@@ -15,8 +15,14 @@ type PageProps = {
 export async function generateMetadata({ params }: PageProps) {
   const resolvedParams = await params;
   const productId = parseInt(resolvedParams.id, 10);
-  
-  const product = await prisma.product.findUnique({ where: { id: productId }});
+  let product = null;
+  if (!isNaN(productId)) {
+    try {
+       product = await prisma.product.findUnique({ where: { id: productId }});
+    } catch (error) {
+       console.error("Metadata fetch failed:", error);
+    }
+  }
 
   if (!product) return { title: "Product Not Found" };
   
@@ -29,8 +35,14 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function ProductPage({ params }: PageProps) {
   const resolvedParams = await params;
   const productId = parseInt(resolvedParams.id, 10);
-  
-  const product = await prisma.product.findUnique({ where: { id: productId }});
+  let product = null;
+  if (!isNaN(productId)) {
+    try {
+       product = await prisma.product.findUnique({ where: { id: productId }});
+    } catch (error) {
+       console.error("Database fetch failed on Product page:", error);
+    }
+  }
 
   if (!product) {
     notFound(); 
