@@ -4,7 +4,7 @@ import {
   User, MoreVertical, Menu, MapPin, 
   ChevronDown, Package, Ticket, Zap, 
   Sparkles, Wallet, Heart, Gift, 
-  Bell, LogOut, UserCircle 
+  Bell, LogOut, UserCircle, Store, Headphones, Presentation
 } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -71,81 +71,56 @@ export function Navbar() {
             {/* ================================================== */}
             {/* ROW 2: Primary Search Bar & Major Actions          */}
             {/* ================================================== */}
-            <div className="flex items-center justify-between w-full h-[52px] gap-8">
+            <div className="flex items-center justify-between w-full h-[52px] gap-4 lg:gap-6">
                
                {/* 1. Large Search Bar */}
-               <div className="flex-1 w-full">
+               <div className="flex-1 w-full relative z-40">
                  <Suspense fallback={<div className="flex-1 w-full bg-gray-100 h-[52px] rounded-2xl animate-pulse" />}>
                     <SearchBar />
                  </Suspense>
                </div>
 
                {/* 2. Specific Nav Actions */}
-               <div className="hidden md:flex items-center gap-8 shrink-0 pr-2 h-full z-50">
+               <div className="hidden md:flex items-center gap-2 lg:gap-5 shrink-0 pr-0 h-full z-50">
                  
                  {/* User Profile Dropdown */}
                  <div className="relative group h-full flex items-center cursor-pointer">
                     <div className="flex items-center gap-2 px-3 py-2 rounded-xl group-hover:bg-[#2874f0]/10 transition-colors h-[40px] group-hover:text-[#2874F0]">
-                      <User className="w-[20px] h-[20px] text-black group-hover:text-[#2874F0] transition-colors" />
+                      <UserCircle className="w-[20px] h-[20px] text-black group-hover:text-[#2874F0] transition-colors" />
                       <span className="font-medium text-[16px] text-black group-hover:text-[#2874F0] transition-colors">Vishal</span>
                       <ChevronDown className="w-[16px] h-[16px] text-black group-hover:text-[#2874F0] group-hover:-rotate-180 transition-transform duration-300" />
                     </div>
 
                     {/* Highly detailed massive dropdown box mimicking native Flipkart */}
-                    <div className="absolute top-[48px] left-1/2 -translate-x-1/2 w-[280px] bg-white rounded-b-xl rounded-t-sm shadow-[0_4px_16px_rgba(0,0,0,0.15)] border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-3 z-[100]">
+                    <div className="absolute top-[48px] left-1/2 -translate-x-1/2 w-[280px] bg-white rounded-b-xl rounded-t-sm shadow-[0_4px_16px_rgba(0,0,0,0.15)] border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2 z-[100]">
                        <div className="px-5 py-2 font-bold text-[14px] text-gray-800">Your Account</div>
                        
-                       <div className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
+                       <div className="flex items-center gap-4 px-5 py-[14px] hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
                           <UserCircle className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
                           <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">My Profile</span>
                        </div>
                        
-                       <div className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
+                       <div className="flex items-center gap-4 px-5 py-[14px] hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item border-t border-gray-50">
                           <Package className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
                           <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Orders</span>
                        </div>
                        
-                       <div className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
+                       <div className="flex items-center gap-4 px-5 py-[14px] hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item border-t border-gray-50">
+                          <Heart className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
+                          <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Wishlist</span>
+                       </div>
+                       
+                       <div className="flex items-center gap-4 px-5 py-[14px] hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item border-t border-gray-50">
                           <Ticket className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
                           <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Coupons</span>
                        </div>
                        
-                       <div className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
-                          <Zap className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
-                          <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Supercoin</span>
-                       </div>
-                       
-                       <div className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
-                          <Sparkles className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
-                          <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Flipkart Plus Zone</span>
-                       </div>
-                       
-                       <div className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
-                          <Wallet className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
-                          <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Saved Cards & Wallet</span>
-                       </div>
-                       
-                       <div className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
-                          <MapPin className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
-                          <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Saved Addresses</span>
-                       </div>
-                       
-                       <Link href="/wishlist" className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
-                          <Heart className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
-                          <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Wishlist</span>
-                       </Link>
-                       
-                       <div className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
+                       <div className="flex items-center gap-4 px-5 py-[14px] hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item border-t border-gray-50">
                           <Gift className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
                           <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Gift Cards</span>
                        </div>
                        
-                       <div className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
-                          <Bell className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
-                          <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Notifications</span>
-                       </div>
-                       
-                       <div className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
+                       <div className="flex items-center gap-4 px-5 py-[14px] hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item border-t border-gray-50">
                           <LogOut className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
                           <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Logout</span>
                        </div>
@@ -154,10 +129,31 @@ export function Navbar() {
                  </div>
 
                  {/* More Option */}
-                 <button aria-label="More options" className="flex items-center gap-2 group cursor-pointer">
-                    <MoreVertical className="w-[20px] h-[20px] text-black group-hover:text-[#2874F0] transition-colors" />
-                    <span className="font-medium text-[16px] text-black group-hover:text-[#2874F0] transition-colors">More</span>
-                 </button>
+                 <div className="relative group h-full flex items-center cursor-pointer">
+                    <div className="flex items-center gap-2 px-3 py-2 rounded-xl group-hover:bg-[#2874f0]/10 transition-colors h-[40px] group-hover:text-[#2874F0]">
+                       <span className="font-medium text-[16px] text-black group-hover:text-[#2874F0] transition-colors">More</span>
+                       <ChevronDown className="w-[16px] h-[16px] text-black group-hover:text-[#2874F0] group-hover:-rotate-180 transition-transform duration-300" />
+                    </div>
+
+                    <div className="absolute top-[48px] left-1/2 -translate-x-1/2 w-[240px] bg-white rounded-b-xl rounded-t-sm shadow-[0_4px_16px_rgba(0,0,0,0.15)] border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-3 z-[100]">
+                       <div className="flex items-center gap-4 px-5 py-[14px] hover:bg-[#F0F5FF] transition-colors cursor-pointer group/item">
+                          <Store className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0]" />
+                          <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Become a Seller</span>
+                       </div>
+                       <div className="flex items-center gap-4 px-5 py-[14px] hover:bg-[#F0F5FF] transition-colors cursor-pointer group/item border-t border-gray-50">
+                          <Bell className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0]" />
+                          <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Notification Settings</span>
+                       </div>
+                       <div className="flex items-center gap-4 px-5 py-[14px] hover:bg-[#F0F5FF] transition-colors cursor-pointer group/item border-t border-gray-50">
+                          <Headphones className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0]" />
+                          <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">24x7 Customer Care</span>
+                       </div>
+                       <div className="flex items-center gap-4 px-5 py-[14px] hover:bg-[#F0F5FF] transition-colors cursor-pointer group/item border-t border-gray-50">
+                          <Presentation className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0]" />
+                          <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Advertise on Flipkart</span>
+                       </div>
+                    </div>
+                 </div>
 
                  {/* Cart Component logic */}
                  <CartAction />
