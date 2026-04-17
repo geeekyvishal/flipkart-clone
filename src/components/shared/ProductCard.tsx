@@ -20,14 +20,14 @@ type ProductCardProps = {
 
 export function ProductCard({ id, title, price, numericPrice, oldPrice, discount, rating, reviews, image }: ProductCardProps) {
   const toggleItem = useWishlistStore(state => state.toggleItem);
-  const isInWishlist = useWishlistStore(state => state.isInWishlist);
+  const isLovedStore = useWishlistStore(state => state.items.some((i) => i.id === id));
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
   
-  const isLoved = mounted ? isInWishlist(id) : false;
+  const isLoved = mounted ? isLovedStore : false;
 
   function handleWishlistToggle(e: React.MouseEvent) {
     e.preventDefault(); // prevent link navigation

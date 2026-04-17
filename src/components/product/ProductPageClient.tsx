@@ -69,7 +69,6 @@ export function ProductPageClient({ productData }: { productData: any }) {
   const router = useRouter();
   const addItem = useCartStore((state) => state.addItem);
   const toggleWishlist = useWishlistStore((state) => state.toggleItem);
-  const isInWishlist = useWishlistStore((state) => state.isInWishlist);
   const [isCartLoading, setIsCartLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
@@ -81,13 +80,14 @@ export function ProductPageClient({ productData }: { productData: any }) {
   const { emiCards, protectionPlanItems, detailsTabs } = productContent;
 
   const selectedId = productData?.id || 1;
+  const isLovedStore = useWishlistStore(state => state.items.some((i) => i.id === selectedId));
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const isLoved = mounted ? isInWishlist(selectedId) : false;
+  const isLoved = mounted ? isLovedStore : false;
 
   // --- Page States ---
   const [isEmiOpen, setIsEmiOpen] = useState(true);
