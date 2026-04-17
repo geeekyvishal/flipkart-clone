@@ -14,7 +14,8 @@ import { PageContainer } from "@/components/layout/PageContainer";
 export function Navbar() {
   return (
     <header className="flex flex-col w-full sticky top-0 z-50">
-      <div className="bg-white w-full">
+      {/* Desktop Navigation */}
+      <div className="bg-white w-full hidden md:block">
         <PageContainer>
           <div className="flex flex-col w-full py-4 gap-4">
             
@@ -164,6 +165,35 @@ export function Navbar() {
 
           </div>
         </PageContainer>
+      </div>
+
+      {/* Mobile Navigation Header */}
+      <div className="md:hidden flex flex-col bg-gradient-to-b from-[#e3f2fd] to-[#f4faff] w-full px-3 pt-3 pb-4">
+         {/* Row 1: App Pillars */}
+         <div className="flex items-center gap-2 w-full mb-3">
+            <Link href="/" className="flex-1 bg-[#FFE500] rounded-xl flex items-center justify-center h-[44px] shadow-sm cursor-pointer">
+               <span className="text-[#2874F0] text-[22px] font-black italic mr-1 mt-1 leading-none shadow-yellow-200">f</span>
+               <span className="text-black font-bold italic text-[16px]">Flipkart</span>
+            </Link>
+            <div className="flex-1 bg-white/90 rounded-xl flex items-center justify-center h-[44px] shadow-sm cursor-pointer border border-[#E0E0E0] gap-1.5">
+               <span className="text-[16px] leading-none mb-0.5">✈️</span>
+               <span className="text-black font-bold italic text-[16px]">Travel</span>
+            </div>
+         </div>
+
+         {/* Row 2: Location */}
+         <div className="flex items-center mb-3 px-1">
+            <MapPin className="w-4 h-4 text-black mr-1.5" />
+            <span className="text-[13px] font-medium text-black">Location not set</span>
+            <span className="text-[13px] font-medium text-[#2874F0] ml-1.5">Select delivery location &gt;</span>
+         </div>
+
+         {/* Row 3: Search Bar */}
+         <div className="w-full relative z-40">
+            <Suspense fallback={<div className="w-full bg-white h-[44px] rounded-xl border border-[#2874F0]" />}>
+               <SearchBar />
+            </Suspense>
+         </div>
       </div>
 
       {/* Category Navigation Row */}
