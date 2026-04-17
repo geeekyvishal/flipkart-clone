@@ -68,6 +68,7 @@ export function ProductPageClient({ productData }: { productData: any }) {
   const router = useRouter();
   const addItem = useCartStore((state) => state.addItem);
   const [isCartLoading, setIsCartLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const {
     likeIcon, shareIcon, wowDealIcon, sevenDaysReturnIcon, cashOnDeliveryIcon,
@@ -143,7 +144,8 @@ export function ProductPageClient({ productData }: { productData: any }) {
     try {
       setIsCartLoading(true);
       addItem(productData);
-      alert("Added to cart");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
       return true;
     } catch (error: any) {
       alert(error.message || "Could not add to cart");
@@ -490,6 +492,19 @@ export function ProductPageClient({ productData }: { productData: any }) {
           </div>
         </div>
       </main>
+
+      {/* Flipkart Style Toast */}
+      {showToast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] bg-[#212121] text-white px-6 py-4 rounded-sm flex items-center justify-between shadow-2xl min-w-[320px] transition-all animate-in slide-in-from-bottom-5">
+          <span className="text-[14px]">Item added to cart</span>
+          <button 
+             onClick={() => router.push('/cart')} 
+             className="text-[#FF9F00] font-bold text-[14px] ml-6 cursor-pointer"
+          >
+            GO TO CART
+          </button>
+        </div>
+      )}
     </div>
   );
 }
