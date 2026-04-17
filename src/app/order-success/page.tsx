@@ -7,7 +7,7 @@ import { PageContainer } from "@/components/layout/PageContainer";
 
 function OrderSuccessContent() {
   const searchParams = useSearchParams();
-  const orderId = searchParams.get("orderId");
+  const orderId = searchParams.get("id") || searchParams.get("orderId");
 
   return (
     <main className="bg-white min-h-[calc(100vh-64px)] py-8 flex items-start justify-center">

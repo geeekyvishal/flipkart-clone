@@ -2,9 +2,11 @@
 
 import { PageContainer } from "@/components/layout/PageContainer";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export function CategoryNav() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +38,10 @@ export function CategoryNav() {
     { label: "Books & ...", icon: "/img-logo/books.svg", active: false },
     { label: "Furniture", icon: "/img-logo/furniture.svg", active: false },
   ];
+
+  if (pathname.startsWith('/product/')) {
+    return null;
+  }
 
   return (
     <div className={`bg-white hidden sm:block transition-all duration-300 ease-in-out w-full`}>

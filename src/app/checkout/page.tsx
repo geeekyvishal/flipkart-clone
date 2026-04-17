@@ -3,6 +3,7 @@
 import { useCartStore } from "@/store/useCartStore";
 import { CartSummary } from "@/components/cart/CartSummary";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
+import { CartItemRow } from "@/components/cart/CartItemRow";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FlipkartLoader } from "@/components/shared/FlipkartLoader";
@@ -48,10 +49,17 @@ export default function CheckoutPage() {
                {/* Active Address Block */}
                <CheckoutForm />
 
-               {/* Ordered Items Preview Mock Block */}
-               <div className="bg-white p-4 shadow-sm border border-gray-100 flex items-center gap-4 rounded-sm opacity-60">
-                 <span className="bg-gray-100 text-gray-500 font-bold w-6 h-6 flex items-center justify-center rounded-sm text-sm">3</span>
-                 <h2 className="text-gray-500 font-medium uppercase text-[15px]">Order Summary</h2>
+               {/* Ordered Items */}
+               <div className="bg-white shadow-sm border border-gray-100 rounded-sm">
+                 <div className="bg-[var(--color-brand)] p-3 flex items-center gap-3 rounded-t-sm">
+                   <span className="bg-white text-[var(--color-brand)] font-bold w-6 h-6 flex items-center justify-center rounded-sm text-sm">3</span>
+                   <h2 className="text-white font-medium uppercase text-sm">Order Summary</h2>
+                 </div>
+                 <div className="flex flex-col">
+                    {cartItems.map((item) => (
+                       <CartItemRow key={item.id} item={item} />
+                    ))}
+                 </div>
                </div>
 
                {/* Payments Mock Block */}

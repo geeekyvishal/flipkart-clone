@@ -3,9 +3,11 @@
 import { ShoppingCart } from "lucide-react";
 import { useCartStore } from "@/store/useCartStore";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function ProductActions({ inStock, productData }: { inStock?: boolean; productData: any }) {
   const addItem = useCartStore((state) => state.addItem);
+  const router = useRouter();
   const [added, setAdded] = useState(false);
 
   const handleAddToCart = () => {
@@ -15,7 +17,8 @@ export function ProductActions({ inStock, productData }: { inStock?: boolean; pr
   };
 
   const handleBuyNow = () => {
-    alert("Proceeding to checkout!");
+    addItem(productData);
+    router.push("/checkout");
   };
 
   return (
