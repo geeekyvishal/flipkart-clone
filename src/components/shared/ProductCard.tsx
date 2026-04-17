@@ -3,11 +3,14 @@
 import { Heart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useWishlistStore } from "@/store/useWishlistStore";
+import { useEffect, useState } from "react";
 
 type ProductCardProps = {
   id: number;
   title: string;
   price: string;
+  numericPrice?: number;
   oldPrice?: string;
   discount?: string;
   rating?: number;
@@ -15,7 +18,23 @@ type ProductCardProps = {
   image: string;
 };
 
-export function ProductCard({ id, title, price, oldPrice, discount, rating, reviews, image }: ProductCardProps) {
+export function ProductCard({ id, title, price, numericPrice, oldPrice, discount, rating, reviews, image }: ProductCardProps) {
+  const toggleItem = useWishlistStore(state => state.toggleItem);
+  const isInWishlist = useWishlistStore(state => state.isInWishlist);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  const isLoved = mounted ? isInWishlist(id) : false;
+
+  function handleWishlistToggle(e: React.MouseEvent) {
+    e.preventDefault(); // prevent link navigation
+    const nPrice = numericPrice || Number(price.replace(/[^0-9]/g, ''));
+    toggleItem({ id, title, price, numericPrice: nPrice, oldPrice, discount, rating, reviews, image });
+  }
+
   return (
     <Link href={`/product/${id}`} className="block h-full cursor-pointer">
       <div className="group bg-white border border-[var(--color-divider)] rounded-xl p-3 flex flex-col gap-2 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all relative h-full">
@@ -23,10 +42,10 @@ export function ProductCard({ id, title, price, oldPrice, discount, rating, revi
       {/* Wishlist Button */}
       <button 
         aria-label="Add to Wishlist"
-        onClick={(e) => e.preventDefault()} // prevent link navigation when clicking heart
+        onClick={handleWishlistToggle}
         className="absolute top-3 right-3 p-1.5 bg-white/80 backdrop-blur-sm rounded-full text-gray-400 hover:text-red-500 z-10 transition-colors"
       >
-        <Heart className="w-5 h-5" aria-hidden="true" />
+        <Heart className={`w-5 h-5 ${isLoved ? 'fill-red-500 text-red-500' : ''}`} aria-hidden="true" />
       </button>
 
         {/* Product Image Wrapper */}

@@ -130,10 +130,10 @@ export function Navbar() {
                           <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Saved Addresses</span>
                        </div>
                        
-                       <div className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
+                       <Link href="/wishlist" className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
                           <Heart className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />
                           <span className="text-[14px] text-gray-700 group-hover/item:text-[#2874F0]">Wishlist</span>
-                       </div>
+                       </Link>
                        
                        <div className="flex items-center gap-4 px-5 py-3 hover:bg-[#F0F5FF] hover:font-medium transition-colors cursor-pointer group/item">
                           <Gift className="w-[18px] h-[18px] text-gray-500 group-hover/item:text-[#2874F0] transition-colors" />

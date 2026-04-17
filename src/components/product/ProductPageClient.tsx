@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/useCartStore";
+import { useWishlistStore } from "@/store/useWishlistStore";
 import "./product.css";
 
 // --- Mock Fallback Assets ---
@@ -67,6 +68,8 @@ const productContent = {
 export function ProductPageClient({ productData }: { productData: any }) {
   const router = useRouter();
   const addItem = useCartStore((state) => state.addItem);
+  const toggleWishlist = useWishlistStore((state) => state.toggleItem);
+  const isInWishlist = useWishlistStore((state) => state.isInWishlist);
   const [isCartLoading, setIsCartLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
@@ -78,6 +81,13 @@ export function ProductPageClient({ productData }: { productData: any }) {
   const { emiCards, protectionPlanItems, detailsTabs } = productContent;
 
   const selectedId = productData?.id || 1;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isLoved = mounted ? isInWishlist(selectedId) : false;
 
   // --- Page States ---
   const [isEmiOpen, setIsEmiOpen] = useState(true);
@@ -160,6 +170,10 @@ export function ProductPageClient({ productData }: { productData: any }) {
     router.push("/checkout");
   }
 
+  function handleLikeClick() {
+    toggleWishlist(productData);
+  }
+
   return (
     <div className="product-page" id="product-page-root">
       <main className="product-main" id="product-main-content">
@@ -170,8 +184,16 @@ export function ProductPageClient({ productData }: { productData: any }) {
           <div className="product-content-grid">
             <section className="product-left-column">
               <div className="product-left-sticky">
-                <button className="media-floating-icon media-floating-icon--like" aria-label="Add to wishlist">
-                  <img src={likeIcon} alt="Like" />
+                <button 
+                  className="media-floating-icon media-floating-icon--like" 
+                  aria-label="Add to wishlist"
+                  onClick={handleLikeClick}
+                >
+                  {isLoved ? (
+                    <svg viewBox="0 0 24 24" fill="red" className="w-6 h-6"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  ) : (
+                    <img src={likeIcon} alt="Like" style={{ width: '24px' }} />
+                  )}
                 </button>
                 <button className="media-floating-icon media-floating-icon--share" aria-label="Share product">
                   <img src={shareIcon} alt="Share" />
