@@ -3,12 +3,17 @@
 import Link from "next/link";
 import { CheckCircle } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useCartStore } from "@/store/useCartStore";
 
 export function SuccessView({ orderId }: { orderId: string }) {
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const clearCart = useCartStore(state => state.clearCart);
 
   useEffect(() => {
+    // Flush the cart now that we have landed safely on the success page
+    clearCart();
+
     if (!orderId || orderId === "UNKNOWN") {
       setLoading(false);
       return;
@@ -40,9 +45,9 @@ export function SuccessView({ orderId }: { orderId: string }) {
          Thank you for your purchase. Your order has been received and is currently being processed.
       </p>
 
-      <div className="bg-gray-50 border border-gray-200 rounded px-6 py-3 mb-6 mt-2">
-        <span className="text-[14px] text-[var(--color-text-secondary)] uppercase font-medium">Order ID:</span>
-        <span className="text-[16px] text-gray-900 font-bold ml-2 tracking-wide">{orderId}</span>
+      <div className="bg-gray-50 border-2 border-[var(--color-brand)] rounded-lg px-8 py-5 mb-8 shadow-sm">
+        <span className="block text-[14px] text-[var(--color-text-secondary)] uppercase font-semibold mb-2">Your Order ID</span>
+        <span className="block text-[28px] text-[var(--color-brand)] font-bold tracking-widest">{orderId}</span>
       </div>
 
       {loading ? (

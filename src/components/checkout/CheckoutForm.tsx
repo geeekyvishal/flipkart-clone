@@ -79,7 +79,6 @@ export function CheckoutForm() {
         throw new Error(data.error || 'Failed to place order');
       }
 
-      clearCart(); // Native zustand flush
       router.push(`/order-success?id=${data.order.id}`);
 
     } catch (error: any) {
